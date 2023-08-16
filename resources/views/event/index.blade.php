@@ -63,20 +63,24 @@
         </nav>
 
 
-        <div class="container d-block">
-            <div class="form-group position-relative has-icon-left">
-                <input type="text" class="form-control" placeholder="Cari Event" id="search-event">
-                <div class="form-control-icon">
-                    <i class="bi bi-search"></i>
+        <div class="mx-2 mx-md-0">
+            <div class="container d-block mb-5">
+                <div class="form-group position-relative has-icon-left">
+                    <input type="text" class="form-control" placeholder="Cari Event" id="search-event">
+                    <div class="form-control-icon">
+                        <i class="bi bi-search"></i>
+                    </div>
+                </div>
+                <div class="container my-4 justify-content-start" id="result-content">
+                    <i class="bi bi-list-nested me-3" id="result-icon"></i>
+                    <div class="fw-semibold" id="result-search"></div>
                 </div>
             </div>
-            <div class="container my-4 justify-content-start" id="result-content">
-                <i class="bi bi-list-nested me-3" id="result-icon"></i>
-                <div class="fw-semibold" id="result-search"></div>
+            <div class="container" id="container-events-all">
+                <div class="position-relative row row-cols-1 row-cols-md-2" id="container-app">
+                    {{-- Events  --}}
+                </div>
             </div>
-        </div>
-        <div class="container position-relative" id="container-app" >
-            {{-- Events  --}}
         </div>
     </div>
 
@@ -103,110 +107,125 @@
                             $('#result-content').css('display', 'none');
                             response.data.forEach((item) => {
                                 let status;
-                                item.status == 'Inactive' ? status = 'bg-warning text-black' : item.status == 'Active' ? status = 'bg-primary' : item.status == 'Selesai' ? status = 'bg-danger' : '';
+                                item.status == 'Inactive' ? status =
+                                    'bg-warning text-black' : item.status == 'Active' ?
+                                    status = 'bg-primary' : item.status == 'Selesai' ?
+                                    status = 'bg-danger' : '';
                                 let event =
                                     `
-                            <div class="card mt-5 position-relative overflow-hidden" id="event-each">
-                                <div class="position-absolute top-0 end-0 d-flex justify-content-center align-items-center h-100 w-status ${status}">
-                                    <div class="event-status-absolute fs-5">${item.status}</div>
-                                </div>
-                                <div class="card-header d-flex" id="event-title">
-                                    <a href="/event/result/${item.id}" class="card-title">
-                                        <h4 class="card-title text-decoration-none">${item.name}</h4>
-                                    </a>
-                                    <i class="bi bi-arrow-right-short ms-2 hover-event"></i>
-                                </div>
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-start" id="description">
-                                        <div class="d-flex mb-3">
-                                            <i class="bi bi-activity me-2"></i>
-                                            <div class="fw-medium" id="status">${item.status}</div>
+                                <div class="">
+                                    <div class="card position-relative overflow-hidden" id="event-each">
+                                        <div class="position-absolute bottom-0 py-1 w-md-0 w-100 end-0 d-flex justify-content-center align-items-center ${status}">
+                                            <div class="event-status-absolute fs-6">${item.status == 'Inactive' ? 'Menunggu' : item.status == 'Active' ? 'Berlangsung' : 'Berakhir'}</div>
                                         </div>
-                                        <span class="fw-medium mx-3" id="spacer-desc">|</span>
-                                        <div class="d-flex mb-3">
-                                            <i class="bi bi-calendar2-event me-2"></i>
-                                            <div class="fw-medium d-flex">
-                                                <div id="start_date">${item.start_date}</div>
-                                                <span class="mx-2">-</span>
-                                                <div id="end_date">${item.end_date}</div>
+                                        <div class="card-header d-flex" id="event-title">
+                                            <a href="/event/result/${item.id}" class="card-title">
+                                                <h4 class="card-title text-decoration-none line-clamp-1">${item.name}</h4>
+                                            </a>
+                                            <i class="bi bi-arrow-right-short ms-2 hover-event"></i>
+                                        </div>
+                                        <div class="card-body ">
+                                            <div class="d-flex justify-content-start" id="description">
+                                                <div class="d-flex mb-3">
+                                                    <i class="bi bi-activity me-2"></i>
+                                                    <div class="fw-medium" id="status">${item.status}</div>
+                                                </div>
+                                                <span class="fw-medium mx-3" id="spacer-desc">|</span>
+                                                <div class="d-flex mb-3">
+                                                    <i class="bi bi-calendar2-event me-2"></i>
+                                                    <div class="fw-medium d-flex">
+                                                        <div id="start_date">${item.start_date}</div>
+                                                        <span class="mx-2">-</span>
+                                                        <div id="end_date">${item.end_date}</div>
+                                                    </div>
+                                                </div>
+                                                <span class="fw-medium mx-3" id="spacer-desc">|</span>
+                                                <div class="d-flex mb-3">
+                                                    <i class="bi bi-people me-2"></i>
+                                                    <div class="fw-medium" id="partisipan">${item.candidates.length} Kandidat</div>
+                                                </div>
+                                            </div>
+                                            <div class="flex justify-content-start me-5">
+                                                <div class="d-flex mb-3">
+                                                    <i class="bi bi-blockquote-left me-2"></i>
+                                                    <div class="fw-medium" id="desc">
+                                                        <p class="line-clamp-1">${item.description}</p>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <span class="fw-medium mx-3" id="spacer-desc">|</span>
-                                        <div class="d-flex mb-3">
-                                            <i class="bi bi-people me-2"></i>
-                                            <div class="fw-medium" id="partisipan">${item.candidates.length} Kandidat</div>
-                                        </div>
-                                    </div>
-                                    <div class="flex justify-content-start me-5">
-                                        <div class="d-flex mb-3">
-                                            <i class="bi bi-blockquote-left me-2"></i>
-                                            <div class="fw-medium" id="desc">${item.description}</div>
-                                        </div>
                                     </div>
                                 </div>
-                            </div>
                             `;
                                 $('#container-app').append(event)
                             })
                         }
-                            $('#search-event').on('input', function() {
-                                let value = $(this).val();
-                                if (value.length > 0) {
-                                    $('#result-content').css('display', 'flex');
-                                    let resultSearch = filterData(response.data, value);
-                                    resultDisplay(resultSearch);
-                                }else{
-                                    $('#container-app').empty();
-                                    $('#result-content').css('display', 'none');
-                            response.data.forEach((item) => {
-                                let status;
-                                item.status == 'Inactive' ? status = 'bg-warning text-black' : item.status == 'Active' ? status = 'bg-primary' : item.status == 'Selesai' ? status = 'bg-danger' : '';
-                                let event =
-                                    `
-                            <div class="card mt-5 position-relative overflow-hidden" id="event-each">
-                                <div class="position-absolute top-0 end-0 d-flex justify-content-center align-items-center h-100 w-status ${status}">
-                                    <div class="event-status-absolute fs-5">${item.status}</div>
-                                </div>
-                                <div class="card-header d-flex" id="event-title">
-                                    <a href="/event/result/${item.id}" class="card-title">
-                                        <h4 class="card-title text-decoration-none">${item.name}</h4>
-                                    </a>
-                                    <i class="bi bi-arrow-right-short ms-2 hover-event"></i>
-                                </div>
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-start" id="description">
-                                        <div class="d-flex mb-3">
-                                            <i class="bi bi-activity me-2"></i>
-                                            <div class="fw-medium" id="status">${item.status}</div>
+                        $('#search-event').on('input', function() {
+                            let value = $(this).val();
+                            if (value.length > 0) {
+                                $('#result-content').css('display', 'flex');
+                                let resultSearch = filterData(response.data, value);
+                                resultDisplay(resultSearch);
+                            } else {
+                                $('#container-app').empty();
+                                $('#result-content').css('display', 'none');
+                                response.data.forEach((item) => {
+                                    let status;
+                                    item.status == 'Inactive' ? status =
+                                        'bg-warning text-black' : item.status ==
+                                        'Active' ? status = 'bg-primary' : item
+                                        .status == 'Selesai' ? status =
+                                        'bg-danger' : '';
+                                    let event =
+                                        `
+                                <div class="">
+                                    <div class="card position-relative overflow-hidden" id="event-each">
+                                        <div class="position-absolute bottom-0 py-1 w-md-0 w-100 end-0 d-flex justify-content-center align-items-center ${status}">
+                                            <div class="event-status-absolute fs-6">${item.status == 'Inactive' ? 'Menunggu' : item.status == 'Active' ? 'Berlangsung' : 'Berakhir'}</div>
                                         </div>
-                                        <span class="fw-medium mx-3" id="spacer-desc">|</span>
-                                        <div class="d-flex mb-3">
-                                            <i class="bi bi-calendar2-event me-2"></i>
-                                            <div class="fw-medium d-flex">
-                                                <div id="start_date">${item.start_date}</div>
-                                                <span class="mx-2">-</span>
-                                                <div id="end_date">${item.end_date}</div>
+                                        <div class="card-header d-flex" id="event-title">
+                                            <a href="/event/result/${item.id}" class="card-title">
+                                                <h4 class="card-title text-decoration-none line-clamp-1">${item.name}</h4>
+                                            </a>
+                                            <i class="bi bi-arrow-right-short ms-2 hover-event"></i>
+                                        </div>
+                                        <div class="card-body ">
+                                            <div class="d-flex justify-content-start" id="description">
+                                                <div class="d-flex mb-3">
+                                                    <i class="bi bi-activity me-2"></i>
+                                                    <div class="fw-medium" id="status">${item.status}</div>
+                                                </div>
+                                                <span class="fw-medium mx-3" id="spacer-desc">|</span>
+                                                <div class="d-flex mb-3">
+                                                    <i class="bi bi-calendar2-event me-2"></i>
+                                                    <div class="fw-medium d-flex">
+                                                        <div id="start_date">${item.start_date}</div>
+                                                        <span class="mx-2">-</span>
+                                                        <div id="end_date">${item.end_date}</div>
+                                                    </div>
+                                                </div>
+                                                <span class="fw-medium mx-3" id="spacer-desc">|</span>
+                                                <div class="d-flex mb-3">
+                                                    <i class="bi bi-people me-2"></i>
+                                                    <div class="fw-medium" id="partisipan">${item.candidates.length} Kandidat</div>
+                                                </div>
+                                            </div>
+                                            <div class="flex justify-content-start">
+                                                <div class="d-flex mb-3">
+                                                    <i class="bi bi-blockquote-left me-2"></i>
+                                                    <div class="fw-medium" id="desc">
+                                                        <p class="line-clamp-1">${item.description}</p>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <span class="fw-medium mx-3" id="spacer-desc">|</span>
-                                        <div class="d-flex mb-3">
-                                            <i class="bi bi-people me-2"></i>
-                                            <div class="fw-medium" id="partisipan">${item.candidates.length} Kandidat</div>
-                                        </div>
-                                    </div>
-                                    <div class="flex justify-content-start">
-                                        <div class="d-flex mb-3">
-                                            <i class="bi bi-blockquote-left me-2"></i>
-                                            <div class="fw-medium" id="desc">${item.description}</div>
-                                        </div>
                                     </div>
                                 </div>
-                            </div>
                             `;
-                                $('#container-app').append(event)
-                            })
-                                }
-                            })
+                                    $('#container-app').append(event)
+                                })
+                            }
+                        })
 
                     })
                 })
@@ -233,44 +252,49 @@
 
                         $('#result-search').html(`${resultSearch.length} Event`)
                         let status;
-                                item.status == 'Inactive' ? status = 'bg-warning' : item.status == 'Active' ? status = 'bg-primary' : item.status == 'Selesai' ? status = 'bg-danger' : '';
-                                let event =
-                                    `
-                            <div class="card mt-5 position-relative overflow-hidden" id="event-each">
-                                <div class="position-absolute top-0 end-0 d-flex justify-content-center z-1 align-items-center h-100 w-status ${status}">
-                                    <div class="event-status-absolute fs-5">${item.status}</div>
-                                </div>
-                                <div class="card-header d-flex" id="event-title">
-                                    <a href="/event/result/${item.id}" class="card-title">
-                                        <h4 class="card-title text-decoration-none">${item.name}</h4>
-                                    </a>
-                                    <i class="bi bi-arrow-right-short ms-2 hover-event"></i>
-                                </div>
-                                <div class="card-body">
-                                    <div class="d-flex justify-content-start" id="description">
-                                        <div class="d-flex mb-3">
-                                            <i class="bi bi-activity me-2"></i>
-                                            <div class="fw-medium" id="status">${item.status}</div>
+                        item.status == 'Inactive' ? status = 'bg-warning' : item.status == 'Active' ?
+                            status = 'bg-primary' : item.status == 'Selesai' ? status = 'bg-danger' : '';
+                        let event =
+                            `
+                            <div class="">
+                                <div class="card position-relative overflow-hidden" id="event-each">
+                                    <div class="position-absolute bottom-0 py-1 w-md-0 w-100 end-0 d-flex justify-content-center align-items-center ${status}">
+                                            <div class="event-status-absolute fs-6">${item.status == 'Inactive' ? 'Menunggu' : item.status == 'Active' ? 'Berlangsung' : 'Berakhir'}</div>
                                         </div>
-                                        <span class="fw-medium mx-3" id="spacer-desc">|</span>
-                                        <div class="d-flex mb-3">
-                                            <i class="bi bi-calendar2-event me-2"></i>
-                                            <div class="fw-medium d-flex">
-                                                <div id="start_date">${item.start_date}</div>
-                                                <span class="mx-2">-</span>
-                                                <div id="end_date">${item.end_date}</div>
+                                    <div class="card-header d-flex" id="event-title">
+                                        <a href="/event/result/${item.id}" class="card-title">
+                                            <h4 class="card-title text-decoration-none line-clamp-1">${item.name}</h4>
+                                        </a>
+                                        <i class="bi bi-arrow-right-short ms-2 hover-event"></i>
+                                    </div>
+                                    <div class="card-body ">
+                                        <div class="d-flex justify-content-start" id="description">
+                                            <div class="d-flex mb-3">
+                                                <i class="bi bi-activity me-2"></i>
+                                                <div class="fw-medium" id="status">${item.status}</div>
+                                            </div>
+                                            <span class="fw-medium mx-3" id="spacer-desc">|</span>
+                                            <div class="d-flex mb-3">
+                                                <i class="bi bi-calendar2-event me-2"></i>
+                                                <div class="fw-medium d-flex">
+                                                    <div id="start_date">${item.start_date}</div>
+                                                    <span class="mx-2">-</span>
+                                                    <div id="end_date">${item.end_date}</div>
+                                                </div>
+                                            </div>
+                                            <span class="fw-medium mx-3" id="spacer-desc">|</span>
+                                            <div class="d-flex mb-3">
+                                                <i class="bi bi-people me-2"></i>
+                                                <div class="fw-medium" id="partisipan">${item.candidates.length} Kandidat</div>
                                             </div>
                                         </div>
-                                        <span class="fw-medium mx-3" id="spacer-desc">|</span>
-                                        <div class="d-flex mb-3">
-                                            <i class="bi bi-people me-2"></i>
-                                            <div class="fw-medium" id="partisipan">${item.candidates.length} Kandidat</div>
-                                        </div>
-                                    </div>
-                                    <div class="flex justify-content-start">
-                                        <div class="d-flex mb-3">
-                                            <i class="bi bi-blockquote-left me-2"></i>
-                                            <div class="fw-medium" id="desc">${item.description}</div>
+                                        <div class="flex justify-content-start">
+                                            <div class="d-flex mb-3">
+                                                <i class="bi bi-blockquote-left me-2"></i>
+                                                <div class="fw-medium" id="desc">
+                                                    <p class="line-clamp-1">${item.description}</p>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

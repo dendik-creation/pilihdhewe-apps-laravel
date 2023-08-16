@@ -225,24 +225,24 @@
                             <div class="card-body">
                                 <div class="d-flex justify-content-start">
                                     <i class="bi bi-people me-2"></i>
-                                    <h5 class="card-title" id="candidate-name-${i+1}">${response.user.name}</h5>
+                                    <h5 class="card-title line-clamp-1" id="candidate-name-${i+1}">${response.user.name}</h5>
                                 </div>
                                 <div class="d-flex justify-content-start">
                                     <div class="d-flex justify-content-start">
                                         <i class="bi bi-bookmark-check me-2"></i>
-                                        <p class="card-text" id="candidate-visi-${i+1}">${response.visi}</p>
+                                        <p class="card-text line-clamp-1" id="candidate-visi-${i+1}">${response.visi}</p>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-start mb-3">
                                     <div class="d-flex justify-content-start">
                                         <i class="bi bi-blockquote-left me-2"></i>
-                                        <p class="card-text" id="candidate-misi-${i+1}">${response.misi}</p>
+                                        <p class="card-text line-clamp-1" id="candidate-misi-${i+1}">${response.misi}</p>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-center fs-5 flex-column">
                                     <div class="d-flex justify-content-start">
                                         <i class="bi bi-pin-angle me-3"></i>
-                                        <p class="card-text" id="candidate-voted-${i+1}">${response.total_vote} / ${total_partisipan} Memilih</p>
+                                        <p class="card-text line-clamp-1" id="candidate-voted-${i+1}">${response.total_vote} / ${total_partisipan} Memilih</p>
                                     </div>
                                 </div>
                             </div>

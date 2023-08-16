@@ -22,7 +22,8 @@ class myVoteProfile extends JsonResource
             'id' => $this->id,
             'event_id' => $this->event_id,
             'user_id' => $this->user_id,
-            'visi_misi' => $this->visi_misi,
+            'visi' => $this->visi,
+            'misi' => $this->misi,
             'event' => [
                 'id' => $this->event->id,
                 'name' => $this->event->name,

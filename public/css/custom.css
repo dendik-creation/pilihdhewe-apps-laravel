@@ -54,9 +54,9 @@
     color: white;
 }
 
-.card-text {
+.line-clamp-1 {
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
@@ -71,18 +71,14 @@
 .fs-maximum-icon {
     font-size: 11em;
 }
+
+.event-status-absolute {
+    color: white;
+}
+
 @media screen and (max-width: 575.98px) {
     #navbar {
         flex-direction: column !important;
-    }
-    #description {
-        flex-direction: column !important;
-    }
-    #title {
-        flex-direction: column !important;
-    }
-    #spacer-desc {
-        display: none;
     }
     .fs-maximum-icon {
         font-size: 8em;
@@ -94,6 +90,18 @@
         overflow: hidden;
         width: 200px;
         height: 200px;
+    }
+}
+
+@media screen and (max-width: 1440px) {
+    #description {
+        flex-direction: column !important;
+    }
+    #title {
+        flex-direction: column !important;
+    }
+    #spacer-desc {
+        display: none;
     }
 }
 
@@ -114,9 +122,4 @@
 
 .w-status {
     width: 50px;
-}
-
-.event-status-absolute {
-    transform: rotateZ(-90deg);
-    color: white;
 }
