@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Yaza\LaravelGoogleDriveStorage\Gdrive;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Config;
 
 class SiswaController extends Controller
 {
@@ -97,14 +98,15 @@ class SiswaController extends Controller
             'gambar.max' => 'Maksimum File Sebesar 1 MB',
             'gambar.mimes' => 'Format Gambar Harus JPG'
         ]);
-        // dd($request->file('gambar'));
         if($request->hasFile('gambar')){
+            // Target Path
+            $path = Config::get('filesystems.disks.google.targetPath');
             // Upload
-            $fileName = 'Images/' . auth()->user()->number_card . '.jpg';
+            $fileName = $path . '/' . auth()->user()->number_card . '.jpg';
             Gdrive::put($fileName, $request->file('gambar'));
 
             // Get ID
-            $myImage = Gdrive::myImage('Images');
+            $myImage = Gdrive::myImage($path);
 
             // Set Public Permission
             Storage::disk('google')->setVisibility($myImage['path'], 'public');
