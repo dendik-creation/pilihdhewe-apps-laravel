@@ -25,7 +25,7 @@ class Kernel extends ConsoleKernel
         //         'status' => 'Inactive'
         //     ]);
         // })->hourly();
-        $schedule->command('sanctum:prune-expired')->everyMinute();
+        $schedule->command('sanctum:prune-expired --hours=2');
     }
 
     /**
