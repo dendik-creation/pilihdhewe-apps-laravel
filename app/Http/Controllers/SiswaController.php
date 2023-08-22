@@ -93,9 +93,9 @@ class SiswaController extends Controller
 
     public function updateImg(Request $request){
         $request->validate([
-            'gambar' => 'required|image|max:1024|mimes:jpg'
+            'gambar' => 'required|image|max:2048|mimes:jpg'
         ],[
-            'gambar.max' => 'Maksimum File Sebesar 1 MB',
+            'gambar.max' => 'Maksimum File Sebesar 2 MB',
             'gambar.mimes' => 'Format Gambar Harus JPG'
         ]);
         if($request->hasFile('gambar')){
