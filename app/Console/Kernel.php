@@ -17,15 +17,22 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->call(function(){
-        //     Event::where('start_date', Carbon::now()->toDateString())->update([
-        //         'status' => 'Active'
-        //     ]);
-        //     Event::where('end_date', Carbon::now()->toDateString())->update([
-        //         'status' => 'Inactive'
-        //     ]);
-        // })->hourly();
+        // Expired Token
         $schedule->command('sanctum:prune-expired --hours=2');
+
+        // Update Event Status
+        $today = Carbon::now();
+        $events = Event::all();
+        foreach ($events as $item) {
+            if($today->between($item->start_date, $item->end_date)){
+                $item->update(['status' => 'Active']);
+            }
+            elseif($today->greaterThan($item->end_date)){
+                $item->update(['status' => 'Selesai']);
+            }else{
+                $item->update(['status' => 'Inactive']);
+            }
+        }
     }
 
     /**

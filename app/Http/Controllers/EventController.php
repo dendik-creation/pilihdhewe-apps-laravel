@@ -7,6 +7,7 @@ use App\Http\Resources\SingleEvent;
 use App\Models\Candidate;
 use App\Models\Event;
 use App\Models\Result;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -29,6 +30,15 @@ class EventController extends Controller
     }
 
     public function store(Request $request){
+        $today = Carbon::now();
+        $isStatus = null;
+        if($today->between($request->start_date, $request->end_date)){
+            $isStatus = 'Active';
+        }elseif($today->greaterThan($request->end_date)){
+            $isStatus = 'Selesai';
+        }else{
+            $isStatus = 'Inactive';
+        }
         $request->validate([
             'name' => 'required',
             'description' => 'required',
@@ -41,7 +51,7 @@ class EventController extends Controller
             'description' => $request->description,
             'start_date' => $request->start_date,
             'end_date' => $request->end_date,
-            'status' => 'Inactive',
+            'status' => $isStatus,
         ]);
 
         foreach ($request->candidates as $candidate){
@@ -60,11 +70,21 @@ class EventController extends Controller
 
     public function update($id, Request $request){
         try {
+            $today = Carbon::now();
+            $isStatus = null;
+            if($today->between($request->start_date, $request->end_date)){
+                $isStatus = 'Active';
+            }elseif($today->greaterThan($request->end_date)){
+                $isStatus = 'Selesai';
+            }else{
+                $isStatus = 'Inactive';
+            }
             Event::where('id', $id)->update([
                 'name' => $request->name,
                 'description' => $request->description,
                 'start_date' => $request->start_date,
                 'end_date' => $request->end_date,
+                'status' => $isStatus,
             ]);
 
             return response()->json([
