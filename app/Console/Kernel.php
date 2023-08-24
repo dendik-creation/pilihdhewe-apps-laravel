@@ -17,9 +17,6 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // Expired Token
-        $schedule->command('sanctum:prune-expired --hours=2');
-
         // Update Event Status
         $today = Carbon::now();
         $events = Event::all();
