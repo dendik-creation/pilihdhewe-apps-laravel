@@ -32,7 +32,7 @@ class EventController extends Controller
     public function store(Request $request){
         $today = Carbon::now();
         $isStatus = null;
-        if($today->between($request->start_date, $request->end_date)){
+        if($today->between($request->start_date, $request->end_date) || $today == $request->start_date){
             $isStatus = 'Active';
         }elseif($today->greaterThan($request->end_date)){
             $isStatus = 'Selesai';
@@ -72,7 +72,7 @@ class EventController extends Controller
         try {
             $today = Carbon::now();
             $isStatus = null;
-            if($today->between($request->start_date, $request->end_date)){
+            if($today->between($request->start_date, $request->end_date) || $today == $request->start_date){
                 $isStatus = 'Active';
             }elseif($today->greaterThan($request->end_date)){
                 $isStatus = 'Selesai';

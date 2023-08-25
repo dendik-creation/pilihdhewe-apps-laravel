@@ -21,7 +21,7 @@ class Kernel extends ConsoleKernel
         $today = Carbon::now();
         $events = Event::all();
         foreach ($events as $item) {
-            if($today->between($item->start_date, $item->end_date)){
+            if($today->between($item->start_date, $item->end_date) || $today == $item->start_date){
                 $item->update(['status' => 'Active']);
             }
             elseif($today->greaterThan($item->end_date)){
