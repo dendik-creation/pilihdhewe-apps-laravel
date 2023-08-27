@@ -7,7 +7,6 @@
     <title>Pilih Dhewe</title>
     <link rel="stylesheet" href="/css/app.css">
     <link rel="stylesheet" href="/css/custom.css">
-    <link rel="stylesheet" href="/css/app-dark.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="shortcut icon" href="/img/link-45deg.svg" type="image/x-icon">
     <style>
@@ -44,7 +43,17 @@
                     <div class="col">
                         <div class="fs-1 font-semibold">Pilih Dhewe</div>
                         <div class="fs-5 font-medium mb-5">Voting & Polling Web Application</div>
-                        <a href="{{ url('/events') }}" class="btn btn-outline-primary border border-2 border-primary text-dark fs-6 font-medium">View Events</a>
+                    </div>
+                </div>
+                <div class="row text-center mb-4">
+                    <a href="{{ url('/events') }}" class="btn btn-outline-primary border w-full border-2 border-primary text-dark fs-6 font-medium">Go to Events</a>
+                </div>
+                <div class="row text-center">
+                    <div class="col">
+                        <a href="https://app.pilihdhewe.my.id" class="btn btn-outline-success w-100 border border-2 border-success text-dark fs-6 font-medium">Login</a>
+                    </div>
+                    <div class="col">
+                        <button onclick="downloadApp()" class="btn btn-outline-warning border border-2 w-100 border-warning fs-6 font-medium">Download App</button>
                     </div>
                 </div>
             </div>
@@ -61,6 +70,13 @@
                 }
                 document.getElementById('content').style.opacity = opacities;
             }, 50);
+        }
+        function downloadApp(){
+            var link = document.createElement("a");
+            link.href = "https://pilihdhewe.my.id/apps/PilihDhewe.apk";
+            link.download = "PilihDhewe.apk";
+            link.click();
+            link.remove();
         }
     </script>
     <script src="/js/bootstrap.min.js"></script>
