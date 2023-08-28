@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/css/custom.css">
     <link rel="stylesheet" href="/css/app-dark.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="shortcut icon" href="./img/Pilih_Dhewe_Colorful.png" type="image/x-icon">
 </head>
 
 <body>

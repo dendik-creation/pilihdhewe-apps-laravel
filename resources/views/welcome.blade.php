@@ -8,17 +8,20 @@
     <link rel="stylesheet" href="/css/app.css">
     <link rel="stylesheet" href="/css/custom.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <link rel="shortcut icon" href="/img/link-45deg.svg" type="image/x-icon">
+    <link rel="shortcut icon" href="./img/Pilih_Dhewe_Colorful.png" type="image/x-icon">
     <style>
-        .animate-icon::before{
-            animation : loop 20s linear infinite;
+        .animate-icon{
+            animation : loop 2s ease-in-out infinite;
         }
         @keyframes loop{
             0%{
-                transform : rotateZ(0deg);
+                transform : translateY(0px);
+            }
+            50%{
+                transform : translateY(-10px);
             }
             100%{
-                transform : rotateZ(360deg);
+                transform : translateY(0px);
             }
         }
         .animate-icon {
@@ -36,7 +39,7 @@
             <div class="d-block">
                 <div class="row text-center">
                     <div class="col">
-                        <i class="bi bi-link-45deg fs-maximum-icon animate-icon" id="sigma-icon"></i>
+                        <img src="./img/pilihdhewe-icons.png" class="w-50 animate-icon" alt="">
                     </div>
                 </div>
                 <div class="row text-center">
@@ -45,15 +48,12 @@
                         <div class="fs-5 font-medium mb-5">Voting & Polling Web Application</div>
                     </div>
                 </div>
-                <div class="row text-center mb-4">
-                    <a href="{{ url('/events') }}" class="btn btn-outline-primary border w-full border-2 border-primary text-dark fs-6 font-medium">Go to Events</a>
-                </div>
-                <div class="row text-center">
-                    <div class="col">
-                        <a href="https://app.pilihdhewe.my.id" class="btn btn-outline-success w-100 border border-2 border-success text-dark fs-6 font-medium">Login</a>
+                <div class="row text-center gap-3">
+                    <div class="col-12">
+                        <a href="{{ url('/events') }}" class="btn btn-outline-primary border border-2 border-primary text-dark fs-6 font-medium w-50">Go to Events</a>
                     </div>
-                    <div class="col">
-                        <button onclick="downloadApp()" class="btn btn-outline-warning border border-2 w-100 border-warning fs-6 font-medium">Download App</button>
+                    <div class="col-12">
+                        <button onclick="downloadApp()" class="btn btn-outline-warning border border-2 border-warning fs-6 font-medium w-50">Donwload App</button>
                     </div>
                 </div>
             </div>
