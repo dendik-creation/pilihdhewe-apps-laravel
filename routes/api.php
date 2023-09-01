@@ -45,7 +45,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     });
 
     // Votes
-    Route::post('/votes', [ResultController::class, 'store'])->middleware(['isVoted', 'isAdmin', 'isActive', 'isCandidate']);
+    Route::post('/votes', [ResultController::class, 'store'])->middleware(['isVoted', 'isAdmin', 'isActive']);
 
     // User Methods Siswa or Admin
     Route::get('/me', [SiswaController::class, 'me']);
