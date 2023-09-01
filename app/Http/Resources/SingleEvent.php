@@ -18,7 +18,6 @@ class SingleEvent extends JsonResource
     {
         $partisipan_data = Result::where('event_id', $this->id)->get();
         $total_partisipan = User::where('role', 'siswa')->count();
-        $excCandidate = $this->candidates->count();
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -27,7 +26,7 @@ class SingleEvent extends JsonResource
             'end_date' => date_format(date_create($this->end_date), 'd F Y'),
             'status' => $this->status,
             'partisipan' => PartisipanList::collection($partisipan_data->loadMissing('user')),
-            'total_partisipan' => $total_partisipan - $excCandidate,
+            'total_partisipan' => $total_partisipan,
             'candidates' => CandidateList::collection($this->candidates->loadMissing('user:id,number_card,name,role,gender,gambar,kelas_id')),
         ];
     }
