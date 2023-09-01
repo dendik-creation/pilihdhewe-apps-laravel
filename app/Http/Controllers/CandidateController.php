@@ -12,9 +12,7 @@ class CandidateController extends Controller
     public function destroy($eventId, $userId , Request $request){
         $candidate = Candidate::where('user_id', $userId)->where('event_id', $eventId)->first();
         $result = Result::where('candidate_id', $candidate->id)->where('event_id', $eventId)->first();
-        if($result){
-            $result->delete();
-        }
+        $result->delete();
         $candidate->delete();
     }
 
