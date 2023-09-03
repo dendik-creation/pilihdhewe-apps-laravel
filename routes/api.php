@@ -32,6 +32,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
         Route::get('/latest-event', [EventController::class, 'latestEvent']);
 
         // Handle Candidate
+        Route::get('/candidates', [CandidateController::class, 'index']);
         Route::post('/candidates', [CandidateController::class, 'store']);
         Route::put('/candidates/{id}', [CandidateController::class, 'update']);
         Route::delete('/candidates/{eventId}/{userId}', [CandidateController::class, 'destroy']);

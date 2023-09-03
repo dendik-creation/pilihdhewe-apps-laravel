@@ -18,13 +18,13 @@ class SiswaController extends Controller
     public function index(Request $request)
     {
         if($request->has('search')){
-            $searchRes = User::with('kelas')->where('name', 'LIKE', "%$request->search%")->where('role', 'siswa')->select(['id', 'number_card', 'name', 'role', 'gender', 'kelas_id','gambar'])->paginate(10);
+            $searchRes = User::with('kelas')->where('name', 'LIKE', "%$request->search%")->where('role', 'siswa')->select(['id', 'number_card', 'name', 'role', 'gender', 'kelas_id','gambar', 'ready_candidate'])->paginate(10);
             return response()->json($searchRes, 200);
         }
         else{
             $siswas = User::with('kelas')
                 ->where('role', 'siswa')
-                ->select(['id', 'number_card', 'name', 'role', 'gender', 'kelas_id','gambar'])
+                ->select(['id', 'number_card', 'name', 'role', 'gender', 'kelas_id','gambar', 'ready_candidate'])
                 ->paginate(10);
             return response()->json($siswas, 200);
         }
@@ -36,7 +36,7 @@ class SiswaController extends Controller
         $siswa = User::with('kelas')
             ->where('role', 'siswa')
             ->where('id', $id)
-            ->select(['id', 'number_card', 'name', 'role', 'gender', 'kelas_id'])
+            ->select(['id', 'number_card', 'name', 'role', 'gender', 'kelas_id', 'ready_candidate'])
             ->first();
         return response()->json($siswa, 200);
     }
@@ -45,7 +45,7 @@ class SiswaController extends Controller
     {
         $userLogin = User::with('kelas')
             ->where('id', Auth::user()->id)
-            ->select(['id', 'number_card', 'name', 'role', 'gender', 'kelas_id', 'gambar'])
+            ->select(['id', 'number_card', 'name', 'role', 'gender', 'kelas_id', 'gambar', 'ready_candidate'])
             ->first();
         return new MyProfile($userLogin);
     }
@@ -65,6 +65,7 @@ class SiswaController extends Controller
             'name' => $request->name,
             'gender' => $request->gender,
             'role' => 'siswa',
+            'ready_candidate' => 'no',
             'password' => bcrypt($request->password),
             'kelas_id' => $request->kelas_id,
             'gambar' => 'https://drive.google.com/uc?id='. $defaultImage,
@@ -80,7 +81,7 @@ class SiswaController extends Controller
     public function update(Request $request, $id)
     {
         $user = User::where('id', $id)->first();
-        if ($request->name == $user->name && $request->gender == $user->gender && $request->kelas_id == $user->kelas_id) {
+        if ($request->name == $user->name && $request->gender == $user->gender && $request->kelas_id == $user->kelas_id && $request->ready_candidate == $user->ready_candidate) {
             return response()->json(
                 [
                     'message' => 'Ubah Setidaknya 1 Data Untuk Update',

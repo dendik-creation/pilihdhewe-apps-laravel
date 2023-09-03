@@ -24,6 +24,7 @@ class MyProfile extends JsonResource
             'kelas' => $this->kelas,
             'role' => $this->role,
             'gender' => $this->gender,
+            'ready_candidate' => $this->ready_candidate,
             'candidate_of' => myVoteProfile::collection(Candidate::where('user_id', $this->id)->get()),
         ];
     }

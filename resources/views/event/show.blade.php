@@ -38,7 +38,8 @@
                             </g>
                         </svg>
                         <div class="form-check form-switch fs-6">
-                            <input class="form-check-input  me-0" type="checkbox" id="toggle-dark">
+                            <input class="form-check-input  me-0" type="checkbox" onchange="window.location.reload()"
+                                id="toggle-dark">
                             <label class="form-check-label"></label>
                         </div>
                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -99,6 +100,18 @@
                     </div>
                 </div>
             </div>
+
+            <div class="card mt-5" id="chartArea">
+                <div class="card-header">
+                    <h4 class="card-title">Statistik Charts</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row row-cols-1" id="chartContainer">
+                        <canvas id="barChart" height="600"></canvas>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -106,6 +119,7 @@
     <script src="/js/app.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         function detailCandidate(name, gambar, visi, misi) {
             const showMisi = misi.split('.').filter((item) => item.trim() !== "");
@@ -134,6 +148,95 @@
                 `,
             });
         }
+
+        const barChart = (candidates, total_partisipan) => {
+            const chart = $('#barChart');
+            const theme = localStorage.getItem('theme');
+            if (theme == 'theme-dark') {
+                Chart.defaults.color = "#fff";
+                Chart.defaults.borderColor = "rgba(255, 255, 255 , 0.2)";
+            } else {
+                Chart.defaults.color = "#1c1c1c";;
+                Chart.defaults.borderColor = "rgba(0, 0, 0 , 0.2)";
+            }
+            Chart.defaults.font.family = 'Quicksand';
+
+            new Chart(chart, {
+                type: 'bar',
+                data: {
+                    labels: candidates.map((item) => item.user.name),
+                    datasets: [{
+                        label: 'Total Vote ',
+                        data: candidates.map((item) => item.total_vote),
+                        backgroundColor: [
+                            'rgba(255, 159, 64, 0.2)',
+                            'rgba(201, 203, 207, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(255, 205, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                        ],
+                        borderColor: [
+                            'rgb(255, 205, 86)',
+                            'rgb(201, 203, 207)',
+                            'rgb(153, 102, 255)',
+                            'rgb(255, 99, 132)',
+                            'rgb(255, 159, 64)',
+                            'rgb(75, 192, 192)',
+                            'rgb(54, 162, 235)',
+                        ],
+                        hoverOffset: 25,
+                        borderRadius: 4,
+                        borderWidth: 3,
+                    }]
+                },
+                options: {
+                    indexAxis: "x",
+                    animation: true,
+                    scales: {
+                        y: {
+                            max: total_partisipan,
+                            ticks: {
+                                beginAtZero: true,
+                                stepSize: total_partisipan > 1000 ? 100 : total_partisipan > 500 ? 50 : total_partisipan > 200 ? 25 : 10,
+                            },
+                        },
+                    },
+                    maintainAspectRatio: true,
+                    responsive: false,
+                    animation: {
+                        animateRotate: true,
+                        animateScale: true,
+                    },
+                    layout: {
+                        padding: {
+                            bottom: 20,
+                        },
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: "Hasil Terbaru",
+                            font: {
+                                size: 16,
+                            },
+                        },
+                        subtitle: {
+                            display: true,
+                            text: "Total Voting yang di raih setiap kandidat",
+                            padding: {
+                                bottom: 30,
+                            },
+                        },
+                        legend: {
+                            display: false,
+                        }
+                    },
+                }
+            });
+        }
+
         $(document).ready(() => {
             let url = window.location.pathname
             var pattern = /\/(\d+)$/;
@@ -165,12 +268,13 @@
                         $('#end_date').html(response.data.end_date)
                         $('#partisipan').html(
                             `${response.data.partisipan.length} / ${response.data.total_partisipan} Berpartisipasi`
-                            )
+                        )
                         let sortBy = response.data.candidates.sort((a, b) => b.total_vote - a
                             .total_vote)
                         for (i = 0; i < sortBy.length; i++) {
                             showCandidate(i, sortBy[i], response.data.total_partisipan)
                         }
+                        barChart(sortBy, response.data.total_partisipan);
                     }),
                     error: ((xhr, status, error) => {
                         $('#event-name').html('Pilih Dhewe')
@@ -269,7 +373,7 @@
                         $('#end_date').html(response.data.end_date)
                         $('#partisipan').html(
                             `${response.data.partisipan.length} / ${response.data.total_partisipan} Berpartisipasi`
-                            )
+                        )
                         if (response.data.status == 'Active') {
                             let sortBy = response.data.candidates.sort((a, b) => b.total_vote - a
                                 .total_vote)
@@ -279,7 +383,7 @@
                                 $(`#candidate-visimisi-${i + 1}`).html(sortBy[i].visi_misi)
                                 $(`#candidate-voted-${i + 1}`).html(
                                     `${sortBy[i].total_vote} / ${response.data.total_partisipan} Memilih`
-                                    )
+                                )
                             }
                         }
                     }),

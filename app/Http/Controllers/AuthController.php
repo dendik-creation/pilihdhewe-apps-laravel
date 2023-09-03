@@ -26,6 +26,7 @@ class AuthController extends Controller
                     'gender' => $user->gender,
                     'role' => $user->role,
                     'kelas' => $user->kelas,
+                    "ready_candidate" => $user->ready_candidate,
                     'candidate_of' => myVoteProfile::collection(Candidate::where('user_id', $user->id)->get()),
                 ],
                 'token' => $user->createToken($user->number_card)->plainTextToken,
@@ -33,7 +34,7 @@ class AuthController extends Controller
         }
         else{
             return response()->json([
-                'message' => 'Login Gagal, Data Tidak Ditemukan'
+                'message' => 'Login Gagal, Kredensial Tidak Valid'
             ],401);
         }
     }
