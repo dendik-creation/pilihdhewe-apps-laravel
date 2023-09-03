@@ -21,18 +21,14 @@ class CandidateController extends Controller
 
     public function destroy($eventId, $userId, Request $request)
     {
-        $candidate = Candidate::where('user_id', $userId)
-            ->where('event_id', $eventId)
-            ->first();
-        $result = Result::where('candidate_id', $candidate->id)
-            ->where('event_id', $eventId)
-            ->first();
+        $candidate = Candidate::where('event_id', $eventId)->where('user_id', $userId)->first();
+        $result = Result::where('candidate_id', $candidate->id)->where('event_id', $eventId)->get();
         if($result){
-            $result->delete();
-            $candidate->delete();
-        }else{
-            $candidate->delete();
+            foreach ($result as $item){
+                $item->delete();
+            }
         }
+        $candidate->delete();
     }
 
     public function store(Request $request)
