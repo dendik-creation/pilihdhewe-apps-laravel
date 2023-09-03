@@ -15,14 +15,21 @@ use Illuminate\Support\Facades\Config;
 
 class SiswaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $siswas = User::with('kelas')
-            ->where('role', 'siswa')
-            ->select(['id', 'number_card', 'name', 'role', 'gender', 'kelas_id','gambar'])
-            ->get();
-        return response()->json($siswas, 200);
+        if($request->has('search')){
+            $searchRes = User::with('kelas')->where('name', 'LIKE', "%$request->search%")->where('role', 'siswa')->select(['id', 'number_card', 'name', 'role', 'gender', 'kelas_id','gambar'])->paginate(10);
+            return response()->json($searchRes, 200);
+        }
+        else{
+            $siswas = User::with('kelas')
+                ->where('role', 'siswa')
+                ->select(['id', 'number_card', 'name', 'role', 'gender', 'kelas_id','gambar'])
+                ->paginate(10);
+            return response()->json($siswas, 200);
+        }
     }
+
 
     public function edit($id)
     {
