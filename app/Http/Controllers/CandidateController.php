@@ -27,8 +27,12 @@ class CandidateController extends Controller
         $result = Result::where('candidate_id', $candidate->id)
             ->where('event_id', $eventId)
             ->first();
-        $result->delete();
-        $candidate->delete();
+        if($result){
+            $result->delete();
+            $candidate->delete();
+        }else{
+            $candidate->delete();
+        }
     }
 
     public function store(Request $request)
