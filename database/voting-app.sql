@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 08 Agu 2023 pada 05.31
+-- Waktu pembuatan: 03 Sep 2023 pada 12.53
 -- Versi server: 10.4.28-MariaDB
 -- Versi PHP: 8.1.17
 
@@ -42,13 +42,9 @@ CREATE TABLE `candidates` (
 --
 
 INSERT INTO `candidates` (`id`, `user_id`, `event_id`, `visi`, `misi`, `created_at`, `updated_at`) VALUES
-(130, 10, 59, 'Visi 1', 'Misi 1', '2023-08-07 19:52:57', '2023-08-07 19:52:57'),
-(131, 11, 59, 'Visi 2', 'Misi 2', '2023-08-07 19:52:57', '2023-08-07 19:52:57'),
-(132, 12, 59, 'Visi 3', 'Misi 3', '2023-08-07 19:52:57', '2023-08-07 19:52:57'),
-(133, 8, 59, 'Visi 4', 'Misi 4', '2023-08-07 19:52:57', '2023-08-07 19:52:57'),
-(134, 6, 60, 'Visi 1', 'Misi 1', '2023-08-07 19:54:22', '2023-08-07 19:54:22'),
-(135, 17, 60, 'Visi 2', 'Misi 2', '2023-08-07 19:54:22', '2023-08-07 19:54:22'),
-(136, 23, 60, 'Visi 3', 'Misi 3', '2023-08-07 19:54:22', '2023-08-07 19:54:22');
+(165, 20, 74, 'ssad', 'sdadadasd', '2023-09-03 07:03:34', '2023-09-03 07:34:50'),
+(166, 22, 74, 'dsfbdg', 'gfbgf', '2023-09-03 07:03:34', '2023-09-03 07:34:50'),
+(167, 23, 74, 'wefacffvfv', 'eAFE.\nASDFAVGW.\nwewfwat24.', '2023-09-03 07:34:50', '2023-09-03 07:34:50');
 
 -- --------------------------------------------------------
 
@@ -72,8 +68,7 @@ CREATE TABLE `events` (
 --
 
 INSERT INTO `events` (`id`, `name`, `description`, `start_date`, `end_date`, `status`, `created_at`, `updated_at`) VALUES
-(59, 'Orang Cina', 'With Many Candidates Test Event', '2023-08-08', '2023-08-29', 'Active', '2023-08-07 19:52:57', '2023-08-07 20:30:20'),
-(60, 'Lorem Jawir', 'Aku Punya Ini', '2023-08-09', '2023-08-25', 'Inactive', '2023-08-07 19:54:22', '2023-08-07 19:54:22');
+(74, 'Sobat', 'alnewajf', '2023-09-03', '2023-09-13', 'Active', '2023-09-03 07:03:34', '2023-09-03 07:34:50');
 
 -- --------------------------------------------------------
 
@@ -217,6 +212,17 @@ CREATE TABLE `results` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data untuk tabel `results`
+--
+
+INSERT INTO `results` (`id`, `user_id`, `event_id`, `candidate_id`, `created_at`, `updated_at`) VALUES
+(1, 24, 74, 166, '2023-09-03 07:18:13', '2023-09-03 07:18:13'),
+(2, 17, 74, 165, NULL, NULL),
+(3, 19, 74, 167, NULL, NULL),
+(4, 23, 74, 166, NULL, NULL),
+(5, 5, 74, 167, NULL, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -232,6 +238,7 @@ CREATE TABLE `users` (
   `role` enum('admin','siswa') NOT NULL,
   `gender` enum('Laki-laki','Perempuan','Rahasia') NOT NULL,
   `password` varchar(255) NOT NULL,
+  `ready_candidate` enum('yes','no') NOT NULL DEFAULT 'no',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -240,25 +247,25 @@ CREATE TABLE `users` (
 -- Dumping data untuk tabel `users`
 --
 
-INSERT INTO `users` (`id`, `number_card`, `name`, `gambar`, `kelas_id`, `role`, `gender`, `password`, `created_at`, `updated_at`) VALUES
-(1, 'SMK-ADMIN', 'Administrator', 'https://drive.google.com/uc?id=1g-XZNlrZHoI2Bbcy_Jr3Fypj51x6gSh-', NULL, 'admin', 'Rahasia', '$2y$10$zPv18UIEQP2vYA8hqXVRr.Pq09CCx9.JkCRG2QK8u9aO9H.i23KCC', '2023-07-06 01:41:41', '2023-08-02 05:03:42'),
-(5, 'SMK-0001', 'Adit Kompressor', 'https://drive.google.com/uc?id=1dSB62dNkMBpYFj64Hc_gfE2wfvAj75Rg', 25, 'siswa', 'Laki-laki', '$2y$10$sE/WT4LFCk8I9kt1.BQzCeeE0JwwpNQau5QTzeW1lkFMEFNd1nbC.', '2023-07-06 21:26:28', '2023-07-25 01:44:16'),
-(6, 'SMK-0002', 'Nayla Bilaiks', 'https://drive.google.com/uc?id=1RmUUDJLEkF6GKx4yoNN9tHt0IGvBCrH2', 6, 'siswa', 'Perempuan', '$2y$10$0iMUdX/xomgk.obWCvoqyOcghAtJUHn8Z0I2je7uyyp.G9vKRkwEG', '2023-07-06 21:32:18', '2023-07-23 21:15:32'),
-(7, 'SMK-0003', 'Zaki Indomie', 'https://drive.google.com/uc?id=1Q7TyEdvDeWraNGgzfwOyC6XGwEsZ8iI-', 27, 'siswa', 'Laki-laki', '$2y$10$PjT2/mj6aJWnThWhLSfgN.jS3.9lnQlYoVxl4hWaXred8v8Ec1AL6', '2023-07-06 21:33:12', '2023-08-02 08:33:38'),
-(8, 'SMK-0004', 'Ilham Penyu', 'https://drive.google.com/uc?id=1_JgzYxTywhJwQpn9p8baqwrkDetG3gPk', 14, 'siswa', 'Laki-laki', '$2y$10$v1xpzh1D.QRXRdKES7Deg.CkQmrYPYXKj8MK4aZ7cnfKv8vodXRVG', '2023-07-07 00:12:10', '2023-07-28 08:59:03'),
-(10, 'SMK-0005', 'Friska Martabak', 'https://drive.google.com/uc?id=1Me7xJ5ek_6_WX-RuOaZYDldCWENZDPFv', 34, 'siswa', 'Perempuan', '$2y$10$S85ArHz2PQKqVj5xF0HqCOhyprJ8LXozQCFliqHnSlDU98X/ykaPq', '2023-07-07 01:27:38', '2023-07-25 00:31:44'),
-(11, 'SMK-0006', 'Yanto Jawa', 'https://drive.google.com/uc?id=1m8YvaiFCRL93eMmWtrmNVa2pEWAIHcoR', 26, 'siswa', 'Laki-laki', '$2y$10$6UL.Vd1exFndiIcquxkuW.ffsiVG5fspRF8GdpJ36A1HWgYAFJglu', '2023-07-10 07:16:54', '2023-08-03 00:11:46'),
-(12, 'SMK-0007', 'Yanti Anak Baik', 'https://drive.google.com/uc?id=1RcbiwziKHGRlPaz3M44rQ_wLIo_ZxHUZ', 30, 'siswa', 'Perempuan', '$2y$10$ZLzjmtoneRwRxnTTneJqJuKc1IzcNxXeLDzGSX1QRCZAs.Rg46qjy', '2023-07-10 07:17:56', '2023-07-25 06:40:17'),
-(14, 'SMK-0009', 'Reza Kecap', 'https://drive.google.com/uc?id=1kYizuTz2Kfg2qdYxx_iiOPQzxjkuHjUk', 32, 'siswa', 'Laki-laki', '$2y$10$LDUCx0ld9BjGii6KE8XJH.2CQ4ioMQk2YmZEBcb2p7dr2E/akGlbK', '2023-07-11 08:02:52', '2023-08-06 01:14:48'),
-(16, 'SMK-0010', 'Dimas Hotwill', 'https://drive.google.com/uc?id=1kJahZtYcCdUU95acXJ8jmdQMgTh12UKh', 26, 'siswa', 'Laki-laki', '$2y$10$f5sJWFTcMYyoGqQzwfAgHetQL60BNcBJ4SA71zA012TKlNAgdtiSO', '2023-07-11 08:17:13', '2023-08-07 05:16:42'),
-(17, 'SMK-0011', 'Malika Kecap Putih', 'https://drive.google.com/uc?id=1ic0rS6TtEUPnn-1EyLrgQuIXI1gQAwoF', 3, 'siswa', 'Perempuan', '$2y$10$BXsDdnhkALH7nIJVFplp0.xO7hRjHbY1eBtzuuMQbuwEgsxtHcGLy', '2023-07-15 00:44:32', '2023-07-25 20:14:51'),
-(18, 'SMK-0012', 'Farhan Kebab', 'https://drive.google.com/uc?id=1RmUUDJLEkF6GKx4yoNN9tHt0IGvBCrH2', 7, 'siswa', 'Laki-laki', '$2y$10$oYcT1ad8uzB2/.FZdWUfgectA/oaYSUG2pqchZ3BCmnuuVp3Bd8si', '2023-07-19 01:39:51', '2023-07-23 21:15:32'),
-(19, 'SMK-0013', 'Chrono Bola', 'https://drive.google.com/uc?id=1OkNbE4DkEcc5JDpR1NF_jqsSBV7nMcuj', 12, 'siswa', 'Laki-laki', '$2y$10$FzgqvRb/1FkAx0h9hXXePuS1Ssx7rBNQbrusynnQzkJioscN1kD82', '2023-07-20 00:22:54', '2023-07-31 08:04:42'),
-(20, 'SMK-0014', 'Slamet Kopling', 'https://drive.google.com/uc?id=13yDVoQbhVcJGaXe_b1eI0cmiRoi_ZGLy', 7, 'siswa', 'Laki-laki', '$2y$10$K5ZeSfgmQleeZGRQIYaguu3fxdXo0MvINYd7/rLmj0LHGyigzBMP6', '2023-07-22 00:55:15', '2023-07-31 08:58:16'),
-(21, 'SMK-0015', 'Rian Batagor', 'https://drive.google.com/uc?id=1rTKA-b4fc_OcvRd3bbmcK4gOpJqkDzZD', 20, 'siswa', 'Laki-laki', '$2y$10$kKSoeHxI22UMy1YNJxAIJOtzVCycab38dxvlfkHvYee/IJ/j060Q.', '2023-07-24 00:35:58', '2023-07-28 09:00:38'),
-(22, 'SMK-0016', 'Sogyo Mogyo', 'https://drive.google.com/uc?id=1TDRRVCi62Aw3jMurvtdPCzu7SE90HvoM', 22, 'siswa', 'Perempuan', '$2y$10$GHpUzNDF3oTU4q4ZraJxuOxenPLc8qryUu1c3R4mGgZe39EvJ63pa', '2023-07-28 09:15:03', '2023-07-29 00:38:55'),
-(23, 'SMK-0017', 'Alok Aseli', 'https://drive.google.com/uc?id=1pcr90Rg8M5Dmoz_wnjwR0RWlP6lBpc9a', 26, 'siswa', 'Laki-laki', '$2y$10$74R5peDVWN9/JoLavve2YeQbnRupeORxItZ3Z5nMe.Gm62c4Fgo6u', '2023-07-30 10:09:49', '2023-07-30 10:10:36'),
-(24, 'SMK-0018', 'Masbro Original', 'https://drive.google.com/uc?id=1hqxf1a0ITHUz-z6xk9Tb3HZegSr9FQk5', 25, 'siswa', 'Laki-laki', '$2y$10$rGka6wKLMsykGb.Z/OSMre.u95P25cPD10Mbj.wzVaR/rfI5ytSTW', '2023-08-01 08:55:31', '2023-08-01 08:59:11');
+INSERT INTO `users` (`id`, `number_card`, `name`, `gambar`, `kelas_id`, `role`, `gender`, `password`, `ready_candidate`, `created_at`, `updated_at`) VALUES
+(1, 'SMK-ADMIN', 'Administrator', 'https://drive.google.com/uc?id=1g-XZNlrZHoI2Bbcy_Jr3Fypj51x6gSh-', NULL, 'admin', 'Rahasia', '$2y$10$zPv18UIEQP2vYA8hqXVRr.Pq09CCx9.JkCRG2QK8u9aO9H.i23KCC', 'no', '2023-07-06 01:41:41', '2023-08-02 05:03:42'),
+(5, 'SMK-0001', 'Adit Kompressor', 'https://drive.google.com/uc?id=1dSB62dNkMBpYFj64Hc_gfE2wfvAj75Rg', 25, 'siswa', 'Laki-laki', '$2y$10$zl.3UfH1brAYG1N1L75iKeVbc7O4J3mcnEn6aKcqMUuGlh5EYC99.', 'yes', '2023-07-06 21:26:28', '2023-09-03 07:30:21'),
+(6, 'SMK-0002', 'Nayla Bilaiks Aseli Keputihan', 'https://drive.google.com/uc?id=1RmUUDJLEkF6GKx4yoNN9tHt0IGvBCrH2', 25, 'siswa', 'Perempuan', '$2y$10$0iMUdX/xomgk.obWCvoqyOcghAtJUHn8Z0I2je7uyyp.G9vKRkwEG', 'no', '2023-07-06 21:32:18', '2023-08-10 21:19:14'),
+(7, 'SMK-0003', 'Zaki Indomie', 'https://drive.google.com/uc?id=1Q7TyEdvDeWraNGgzfwOyC6XGwEsZ8iI-', 27, 'siswa', 'Laki-laki', '$2y$10$PjT2/mj6aJWnThWhLSfgN.jS3.9lnQlYoVxl4hWaXred8v8Ec1AL6', 'no', '2023-07-06 21:33:12', '2023-08-02 08:33:38'),
+(8, 'SMK-0004', 'Ilham Penyu', 'https://drive.google.com/uc?id=1_JgzYxTywhJwQpn9p8baqwrkDetG3gPk', 14, 'siswa', 'Laki-laki', '$2y$10$v1xpzh1D.QRXRdKES7Deg.CkQmrYPYXKj8MK4aZ7cnfKv8vodXRVG', 'no', '2023-07-07 00:12:10', '2023-07-28 08:59:03'),
+(10, 'SMK-0005', 'Dimz Coyes', 'https://drive.google.com/uc?id=1Me7xJ5ek_6_WX-RuOaZYDldCWENZDPFv', 34, 'siswa', 'Laki-laki', '$2y$10$S85ArHz2PQKqVj5xF0HqCOhyprJ8LXozQCFliqHnSlDU98X/ykaPq', 'yes', '2023-07-07 01:27:38', '2023-09-03 06:56:28'),
+(11, 'SMK-0006', 'Yanto Jawa', 'https://drive.google.com/uc?id=1m8YvaiFCRL93eMmWtrmNVa2pEWAIHcoR', 26, 'siswa', 'Laki-laki', '$2y$10$6UL.Vd1exFndiIcquxkuW.ffsiVG5fspRF8GdpJ36A1HWgYAFJglu', 'no', '2023-07-10 07:16:54', '2023-08-07 21:18:02'),
+(12, 'SMK-0007', 'Yanti Anak Baik', 'https://drive.google.com/uc?id=1RcbiwziKHGRlPaz3M44rQ_wLIo_ZxHUZ', 30, 'siswa', 'Perempuan', '$2y$10$ZLzjmtoneRwRxnTTneJqJuKc1IzcNxXeLDzGSX1QRCZAs.Rg46qjy', 'no', '2023-07-10 07:17:56', '2023-07-25 06:40:17'),
+(14, 'SMK-0009', 'Reza Kecap', 'https://drive.google.com/uc?id=1kYizuTz2Kfg2qdYxx_iiOPQzxjkuHjUk', 32, 'siswa', 'Laki-laki', '$2y$10$LDUCx0ld9BjGii6KE8XJH.2CQ4ioMQk2YmZEBcb2p7dr2E/akGlbK', 'no', '2023-07-11 08:02:52', '2023-08-06 01:14:48'),
+(16, 'SMK-0010', 'Dimas Hotwill', 'https://drive.google.com/uc?id=1kJahZtYcCdUU95acXJ8jmdQMgTh12UKh', 26, 'siswa', 'Laki-laki', '$2y$10$f5sJWFTcMYyoGqQzwfAgHetQL60BNcBJ4SA71zA012TKlNAgdtiSO', 'yes', '2023-07-11 08:17:13', '2023-08-07 05:16:42'),
+(17, 'SMK-0011', 'Malika Kecap Putih', 'https://drive.google.com/uc?id=1ic0rS6TtEUPnn-1EyLrgQuIXI1gQAwoF', 3, 'siswa', 'Perempuan', '$2y$10$BXsDdnhkALH7nIJVFplp0.xO7hRjHbY1eBtzuuMQbuwEgsxtHcGLy', 'no', '2023-07-15 00:44:32', '2023-07-25 20:14:51'),
+(18, 'SMK-0012', 'Farhan Kebab', 'https://drive.google.com/uc?id=1oZE9zWhZFnMIKDkT3g3KcK-kC_aWpgHm', 7, 'siswa', 'Laki-laki', '$2y$10$oYcT1ad8uzB2/.FZdWUfgectA/oaYSUG2pqchZ3BCmnuuVp3Bd8si', 'no', '2023-07-19 01:39:51', '2023-08-18 05:22:22'),
+(19, 'SMK-0013', 'Chrono Bola', 'https://drive.google.com/uc?id=1OkNbE4DkEcc5JDpR1NF_jqsSBV7nMcuj', 12, 'siswa', 'Laki-laki', '$2y$10$FzgqvRb/1FkAx0h9hXXePuS1Ssx7rBNQbrusynnQzkJioscN1kD82', 'no', '2023-07-20 00:22:54', '2023-07-31 08:04:42'),
+(20, 'SMK-0014', 'Slamet Kopling', 'https://drive.google.com/uc?id=13yDVoQbhVcJGaXe_b1eI0cmiRoi_ZGLy', 7, 'siswa', 'Laki-laki', '$2y$10$K5ZeSfgmQleeZGRQIYaguu3fxdXo0MvINYd7/rLmj0LHGyigzBMP6', 'yes', '2023-07-22 00:55:15', '2023-07-31 08:58:16'),
+(21, 'SMK-0015', 'Rian Batagor', 'https://drive.google.com/uc?id=1rTKA-b4fc_OcvRd3bbmcK4gOpJqkDzZD', 20, 'siswa', 'Laki-laki', '$2y$10$kKSoeHxI22UMy1YNJxAIJOtzVCycab38dxvlfkHvYee/IJ/j060Q.', 'no', '2023-07-24 00:35:58', '2023-07-28 09:00:38'),
+(22, 'SMK-0016', 'Sogyo Mogyo', 'https://drive.google.com/uc?id=1TDRRVCi62Aw3jMurvtdPCzu7SE90HvoM', 22, 'siswa', 'Perempuan', '$2y$10$GHpUzNDF3oTU4q4ZraJxuOxenPLc8qryUu1c3R4mGgZe39EvJ63pa', 'yes', '2023-07-28 09:15:03', '2023-07-29 00:38:55'),
+(23, 'SMK-0017', 'Alok Aseli', 'https://drive.google.com/uc?id=1pcr90Rg8M5Dmoz_wnjwR0RWlP6lBpc9a', 26, 'siswa', 'Laki-laki', '$2y$10$74R5peDVWN9/JoLavve2YeQbnRupeORxItZ3Z5nMe.Gm62c4Fgo6u', 'yes', '2023-07-30 10:09:49', '2023-09-03 07:30:47'),
+(24, 'SMK-0018', 'Lmao Pisan Kang', 'https://drive.google.com/uc?id=1hqxf1a0ITHUz-z6xk9Tb3HZegSr9FQk5', 25, 'siswa', 'Laki-laki', '$2y$10$rGka6wKLMsykGb.Z/OSMre.u95P25cPD10Mbj.wzVaR/rfI5ytSTW', 'no', '2023-08-01 08:55:31', '2023-09-03 04:33:57');
 
 --
 -- Indexes for dumped tables
@@ -335,13 +342,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `candidates`
 --
 ALTER TABLE `candidates`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=137;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=168;
 
 --
 -- AUTO_INCREMENT untuk tabel `events`
 --
 ALTER TABLE `events`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
 -- AUTO_INCREMENT untuk tabel `failed_jobs`
@@ -365,19 +372,19 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT untuk tabel `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=306;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=350;
 
 --
 -- AUTO_INCREMENT untuk tabel `results`
 --
 ALTER TABLE `results`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
