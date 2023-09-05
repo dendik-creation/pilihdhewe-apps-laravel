@@ -21,6 +21,7 @@ class CandidateList extends JsonResource
             'user' => $this->user->loadMissing('kelas'),
             'visi' => $this->visi,
             'misi' => $this->misi,
+            'video' => $this->video,
             'total_vote' => Result::where('candidate_id', $this->id)->where('event_id', $this->event_id)->count(),
         ];
     }

@@ -10,6 +10,16 @@
     <link rel="stylesheet" href="/css/app-dark.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="shortcut icon" href="./img/Pilih_Dhewe_Colorful.png" type="image/x-icon">
+    <style>
+        .video-btn {
+            text-decoration: underline;
+            cursor: pointer
+        }
+
+        .video-btn:hover {
+            text-decoration: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -141,12 +151,28 @@
 
                     <div class="flex flex-col w-full justify-start items-start">
                         <h2 class="font-semibold text-2xl text-center w-full mb-1">Misi</h2>
-                        <ol class="text-start d-flex gap-3 flex-column" id="misi_details">
+                        <ol class="text-start d-flex gap-2 flex-column" id="misi_details">
                             ${showMisi.map((item, i) => `<li>${i > 0 ? item.substring(1) : item}</li>`).join('')}
                         </ol>
                     </div>
                 `,
             });
+        }
+
+        function embedCandidateVideo(video_url, candidate_name) {
+            Swal.fire({
+                title : "Video " + candidate_name,
+                showConfirmButton : false,
+                showCloseButton : true,
+                customClass : 'swal-embed-video',
+                allowOutsideClick: false,
+                html :
+                `
+                <div class="d-flex justify-content-center align-items-center mt-2">
+                    <iframe src="${video_url}" class="w-100 h-100 rounded iframe-embed-video" frameborder="0"></iframe>
+                </div>
+                `
+            })
         }
 
         const barChart = (candidates, total_partisipan) => {
@@ -199,7 +225,8 @@
                             max: total_partisipan,
                             ticks: {
                                 beginAtZero: true,
-                                stepSize: total_partisipan > 1000 ? 100 : total_partisipan > 500 ? 50 : total_partisipan > 200 ? 25 : 10,
+                                stepSize: total_partisipan > 1000 ? 100 : total_partisipan > 500 ? 50 :
+                                    total_partisipan > 200 ? 25 : 10,
                             },
                         },
                     },
@@ -217,14 +244,14 @@
                     plugins: {
                         title: {
                             display: true,
-                            text: "Hasil Terbaru",
+                            text: "Hasil Voting",
                             font: {
                                 size: 16,
                             },
                         },
                         subtitle: {
                             display: true,
-                            text: "Total Voting yang di raih setiap kandidat",
+                            text: "Total voting yang diraih setiap kandidat",
                             padding: {
                                 bottom: 30,
                             },
@@ -242,6 +269,7 @@
             var pattern = /\/(\d+)$/;
             let matchUrl = url.match(pattern);
             getFirst();
+
             // setTimeout(() => {
             //     setInterval(() => {
             //         updateData();
@@ -332,22 +360,32 @@
                                     <i class="bi bi-people me-2"></i>
                                     <h5 class="card-title line-clamp-1" id="candidate-name-${i+1}">${response.user.name}</h5>
                                 </div>
-                                <div class="d-flex justify-content-start">
+                                <div class="d-flex justify-content-start mb-1">
                                     <div class="d-flex justify-content-start">
                                         <i class="bi bi-bookmark-check me-2"></i>
                                         <p class="card-text line-clamp-1" id="candidate-visi-${i+1}">${response.visi}</p>
                                     </div>
                                 </div>
-                                <div class="d-flex justify-content-start mb-3">
+
+                                <div class="d-flex justify-content-start mb-1">
                                     <div class="d-flex justify-content-start">
                                         <i class="bi bi-blockquote-left me-2"></i>
                                         <p class="card-text line-clamp-1" id="candidate-misi-${i+1}">${response.misi}</p>
                                     </div>
                                 </div>
-                                <div class="d-flex justify-content-center fs-5 flex-column">
+
+                                <div class="d-flex justify-content-start mb-3">
                                     <div class="d-flex justify-content-start">
+                                        <i class="bi bi-camera-video me-2"></i>
+                                        <p onclick="embedCandidateVideo('${response.video}', '${response.user.name}')" class="card-text line-clamp-1 video-btn" id="candidate-video-${i+1}">Tonton Video</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-center flex-column">
+                                    <div class="d-flex justify-content-start align-items-center">
                                         <i class="bi bi-pin-angle me-3"></i>
-                                        <p class="card-text line-clamp-1" id="candidate-voted-${i+1}">${response.total_vote} / ${total_partisipan} Memilih</p>
+                                        <p class="card-text line-clamp-1" id="candidate-voted-${i+1}">
+                                            <span class="fs-2">${response.total_vote}</span> / <span>${total_partisipan} Memilih<span>
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -380,9 +418,11 @@
                             for (i = 0; i < sortBy.length; i++) {
                                 $(`#candidate-name-${i + 1}`).html(sortBy[i].user.name)
                                 $(`#candidate-img-${i + 1}`).attr("src", sortBy[i].user.gambar)
-                                $(`#candidate-visimisi-${i + 1}`).html(sortBy[i].visi_misi)
+                                $(`#candidate-visi-${i + 1}`).html(sortBy[i].visi)
+                                $(`#candidate-misi-${i + 1}`).html(sortBy[i].misi)
+                                $(`#candidate-video-${i + 1}`).attr("src", sortBy[i].video)
                                 $(`#candidate-voted-${i + 1}`).html(
-                                    `${sortBy[i].total_vote} / ${response.data.total_partisipan} Memilih`
+                                    `<span class="fs-2">${sortBy[i].total_vote}</span> / <span>${response.data.total_partisipan} Memilih<span>`
                                 )
                             }
                         }

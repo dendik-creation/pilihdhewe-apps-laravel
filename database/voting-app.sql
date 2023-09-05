@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 03 Sep 2023 pada 12.53
+-- Waktu pembuatan: 05 Sep 2023 pada 17.11
 -- Versi server: 10.4.28-MariaDB
 -- Versi PHP: 8.1.17
 
@@ -33,6 +33,7 @@ CREATE TABLE `candidates` (
   `event_id` bigint(20) UNSIGNED NOT NULL,
   `visi` text NOT NULL,
   `misi` text NOT NULL,
+  `video` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -41,10 +42,13 @@ CREATE TABLE `candidates` (
 -- Dumping data untuk tabel `candidates`
 --
 
-INSERT INTO `candidates` (`id`, `user_id`, `event_id`, `visi`, `misi`, `created_at`, `updated_at`) VALUES
-(165, 20, 74, 'ssad', 'sdadadasd', '2023-09-03 07:03:34', '2023-09-03 07:34:50'),
-(166, 22, 74, 'dsfbdg', 'gfbgf', '2023-09-03 07:03:34', '2023-09-03 07:34:50'),
-(167, 23, 74, 'wefacffvfv', 'eAFE.\nASDFAVGW.\nwewfwat24.', '2023-09-03 07:34:50', '2023-09-03 07:34:50');
+INSERT INTO `candidates` (`id`, `user_id`, `event_id`, `visi`, `misi`, `video`, `created_at`, `updated_at`) VALUES
+(165, 20, 74, 'ssad', 'sdadadasd', 'https://youtube.com/embed/3k4rj4LweYw', '2023-09-03 07:03:34', '2023-09-03 07:34:50'),
+(166, 22, 74, 'dsfbdg', 'gfbgf', 'https://www.youtube.com/embed/jb2suEJM7kk', '2023-09-03 07:03:34', '2023-09-03 07:34:50'),
+(167, 23, 74, 'wefacffvfv', 'eAFE.\nASDFAVGW.\nwewfwat24.', 'https://youtube.com/embed/3k4rj4LweYw', '2023-09-03 07:34:50', '2023-09-03 07:34:50'),
+(168, 10, 75, 'Visi 1', 'Misi 1', 'https://youtube.com/embed/3k4rj4LweYw', '2023-09-05 14:54:37', '2023-09-05 14:54:37'),
+(169, 11, 75, 'Visi 2', 'Misi 2', 'https://youtube.com/embed/3k4rj4LweYw', '2023-09-05 14:54:37', '2023-09-05 14:54:37'),
+(170, 12, 75, 'Visi 3', 'Misi 3', 'https://youtube.com/embed/3k4rj4LweYw', '2023-09-05 14:54:37', '2023-09-05 14:54:37');
 
 -- --------------------------------------------------------
 
@@ -68,7 +72,8 @@ CREATE TABLE `events` (
 --
 
 INSERT INTO `events` (`id`, `name`, `description`, `start_date`, `end_date`, `status`, `created_at`, `updated_at`) VALUES
-(74, 'Sobat', 'alnewajf', '2023-09-03', '2023-09-13', 'Active', '2023-09-03 07:03:34', '2023-09-03 07:34:50');
+(74, 'Sobat', 'alnewajf', '2023-09-03', '2023-09-13', 'Active', '2023-09-03 07:03:34', '2023-09-03 07:34:50'),
+(75, 'Lorem Kehidupan', 'Aku Punya Ini', '2023-09-05', '2023-09-07', 'Active', '2023-09-05 14:54:37', '2023-09-05 14:54:37');
 
 -- --------------------------------------------------------
 
@@ -342,13 +347,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `candidates`
 --
 ALTER TABLE `candidates`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=168;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=171;
 
 --
 -- AUTO_INCREMENT untuk tabel `events`
 --
 ALTER TABLE `events`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- AUTO_INCREMENT untuk tabel `failed_jobs`
@@ -372,7 +377,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT untuk tabel `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=350;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=351;
 
 --
 -- AUTO_INCREMENT untuk tabel `results`

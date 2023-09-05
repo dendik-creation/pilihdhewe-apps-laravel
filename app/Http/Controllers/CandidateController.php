@@ -46,13 +46,19 @@ class CandidateController extends Controller
     public function update($id, Request $request)
     {
         $candidateUpdate = Candidate::where('event_id', $request->event_id)
-            ->where('id', $id)
+        ->where('id', $id);
+        $video_url = $candidateUpdate->video;
+        preg_match('/\/([A-Za-z0-9_\-]{11})\?/', $video_url, $matches);
+        $url_id = $matches[1];
+        $embeded = "https://youtube.com/embed/$url_id";
+
+        $candidateUpdate
             ->update([
                 'user_id' => $request->user_id,
                 'visi' => $request->visi,
                 'misi' => $request->misi,
+                'video' => $embeded,
             ]);
-
         return response()->json($candidateUpdate, 200);
     }
 }

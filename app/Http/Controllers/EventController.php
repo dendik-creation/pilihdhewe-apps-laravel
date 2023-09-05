@@ -55,11 +55,16 @@ class EventController extends Controller
         ]);
 
         foreach ($request->candidates as $candidate){
+            $video_url = $candidate['video'];
+            preg_match('/\/([A-Za-z0-9_\-]{11})\?/', $video_url, $matches);
+            $url_id = $matches[1];
+            $embeded = "https://youtube.com/embed/$url_id";
             Candidate::create([
                 'user_id' => $candidate['user_id'],
                 'event_id' => $event->id,
                 'visi' => $candidate['visi'],
                 'misi' => $candidate['misi'],
+                'video' => $embeded,
             ]);
         }
 

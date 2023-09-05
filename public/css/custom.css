@@ -76,6 +76,14 @@
     color: white;
 }
 
+.swal-embed-video {
+    width: 960px !important;
+}
+
+.iframe-embed-video {
+    height: 540px !important;
+}
+
 @media screen and (max-width: 575.98px) {
     #navbar {
         flex-direction: column !important;
@@ -90,6 +98,14 @@
         overflow: hidden;
         width: 200px;
         height: 200px;
+    }
+
+    .swal-embed-video {
+        width: 100% !important;
+    }
+
+    .iframe-embed-video {
+        height: 300px !important;
     }
 }
 
