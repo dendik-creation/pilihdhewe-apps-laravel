@@ -45,12 +45,19 @@ class CandidateController extends Controller
 
     public function update($id, Request $request)
     {
-        $candidateUpdate = Candidate::where('event_id', $request->event_id)
-        ->where('id', $id);
-        $video_url = $candidateUpdate['video'];
-        preg_match('/\/([A-Za-z0-9_\-]{11})\?/', $video_url, $matches);
-        $url_id = $matches[1];
+        $video_url = $request->video;
+
+        // URL is for Embed or Not
+        if(strpos($video_url, "/embed") !== false){
+            $parts = explode('/', parse_url($video_url, PHP_URL_PATH));
+            $url_id = end($parts);
+        }else{
+            preg_match('/\/([A-Za-z0-9_\-]{11})\?/', $video_url, $matches);
+            $url_id = $matches[1];
+        }
         $embeded = "https://youtube.com/embed/$url_id";
+        $candidateUpdate = Candidate::where('event_id', $request->event_id)
+        ->where('id', $id)->first();
 
         $candidateUpdate
             ->update([
