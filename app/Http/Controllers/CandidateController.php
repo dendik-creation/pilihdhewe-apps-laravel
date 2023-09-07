@@ -33,12 +33,24 @@ class CandidateController extends Controller
 
     public function store(Request $request)
     {
-        foreach ($request->candidates as $candidate) {
+        foreach ($request->candidates as $candidate){
+            $video_url = $candidate['video'];
+
+            // URL is for Embed or Not
+            if(strpos($video_url, "/embed") !== false){
+                $parts = explode('/', parse_url($video_url, PHP_URL_PATH));
+                $url_id = end($parts);
+            }else{
+                preg_match('/\/([A-Za-z0-9_\-]{11})\?/', $video_url, $matches);
+                $url_id = $matches[1];
+            }
+            $embeded = "https://youtube.com/embed/$url_id";
             Candidate::create([
                 'user_id' => $candidate['user_id'],
                 'event_id' => $candidate['event_id'],
                 'visi' => $candidate['visi'],
                 'misi' => $candidate['misi'],
+                'video' => $embeded,
             ]);
         }
     }
